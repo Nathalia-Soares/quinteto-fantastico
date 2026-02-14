@@ -97,8 +97,10 @@ const CarouselTrack = styled.div<{ $offset: number; $isDragging: boolean }>`
   width: max-content;
   gap: ${spacing.lg};
   padding: 0 ${spacing.lg};
-  transform: translateX(${(p) => -p.$offset}px);
-  transition: transform ${(p) => (p.$isDragging ? '0s' : '0.1s linear')};
+  transform: translate3d(${(p) => -p.$offset}px, 0, 0);
+  transition: none;
+  will-change: transform;
+  backface-visibility: hidden;
 
   @media (min-width: ${breakpoints.sm}) {
     gap: ${spacing.xl};
@@ -163,11 +165,13 @@ export function TeamSection() {
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
-    const ro = new ResizeObserver(() => {
-      setSetWidth(track.scrollWidth / 2);
-    });
+    const updateWidth = () => {
+      const w = track.scrollWidth / 2;
+      if (w > 0) setSetWidth(w);
+    };
+    const ro = new ResizeObserver(updateWidth);
     ro.observe(track);
-    setSetWidth(track.scrollWidth / 2);
+    updateWidth();
     return () => ro.disconnect();
   }, [duplicatedMembers.length]);
 
@@ -175,12 +179,17 @@ export function TeamSection() {
     if (isDragging || setWidth <= 0) return;
     let raf = 0;
     const tick = () => {
-      setScrollOffset((prev) => wrapOffset(prev + AUTO_SPEED));
+      setScrollOffset((prev) => {
+        const next = prev + AUTO_SPEED;
+        if (setWidth <= 0) return prev;
+        if (next >= setWidth) return next - setWidth;
+        return next;
+      });
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [isDragging, setWidth, wrapOffset]);
+  }, [isDragging, setWidth]);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
