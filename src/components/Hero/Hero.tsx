@@ -74,14 +74,20 @@ const Badge = styled.span`
 `;
 
 const Title = styled.h1`
-  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-size: clamp(1.625rem, 4.5vw, 3rem);
   font-weight: 800;
   letter-spacing: -0.035em;
-  line-height: 1.15;
+  line-height: 1.2;
   color: var(--text);
   margin: 0;
   min-height: 1.2em;
-  white-space: nowrap;
+  white-space: normal;
+  max-width: 100%;
+
+  @media (min-width: ${breakpoints.md}) {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    white-space: nowrap;
+  }
 
   span.accent {
     background: linear-gradient(
@@ -117,8 +123,8 @@ const Subtitle = styled.p`
   }
 `;
 
-const CHAR_DELAY_MS = 55;
-const DELETE_DELAY_MS = 35;
+const CHAR_DELAY_MS = 85;
+const DELETE_DELAY_MS = 45;
 const PAUSE_AT_END_MS = 2200;
 const PAUSE_AFTER_DELETE_MS = 400;
 
