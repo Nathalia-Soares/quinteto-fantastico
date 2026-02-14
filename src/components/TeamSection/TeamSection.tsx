@@ -53,6 +53,7 @@ const CarouselWrapper = styled.div`
   user-select: none;
   padding: 24px 0;
   margin: -24px 0;
+  touch-action: pan-y;
 
   &:active {
     cursor: grabbing;
@@ -61,17 +62,34 @@ const CarouselWrapper = styled.div`
   mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 6%,
-    black 94%,
+    black 8%,
+    black 92%,
     transparent 100%
   );
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 6%,
-    black 94%,
+    black 8%,
+    black 92%,
     transparent 100%
   );
+
+  @media (min-width: ${breakpoints.sm}) {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 6%,
+      black 94%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 6%,
+      black 94%,
+      transparent 100%
+    );
+  }
 `;
 
 const CarouselTrack = styled.div<{ $offset: number; $isDragging: boolean }>`
@@ -88,10 +106,15 @@ const CarouselTrack = styled.div<{ $offset: number; $isDragging: boolean }>`
 `;
 
 const Slide = styled.div`
-  flex: 0 0 300px;
-  min-width: 300px;
+  flex: 0 0 260px;
+  min-width: 260px;
 
   @media (min-width: ${breakpoints.sm}) {
+    flex: 0 0 300px;
+    min-width: 300px;
+  }
+
+  @media (min-width: ${breakpoints.md}) {
     flex: 0 0 320px;
     min-width: 320px;
   }
@@ -128,6 +151,7 @@ export function TeamSection() {
   const dragStartX = useRef(0);
   const dragStartOffset = useRef(0);
   const didDrag = useRef(false);
+  const isTouch = useRef(false);
 
   const wrapOffset = useCallback((value: number) => {
     if (setWidth <= 0) return value;
@@ -161,24 +185,47 @@ export function TeamSection() {
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
     didDrag.current = false;
+    isTouch.current = false;
     setIsDragging(true);
     dragStartX.current = e.clientX;
+    dragStartOffset.current = scrollOffset;
+  }, [scrollOffset]);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    didDrag.current = false;
+    isTouch.current = true;
+    setIsDragging(true);
+    dragStartX.current = e.touches[0].clientX;
     dragStartOffset.current = scrollOffset;
   }, [scrollOffset]);
 
   useEffect(() => {
     if (!isDragging) return;
     const handleMouseMove = (e: MouseEvent) => {
+      if (isTouch.current) return;
       const delta = dragStartX.current - e.clientX;
       if (Math.abs(delta) > 5) didDrag.current = true;
       setScrollOffset(wrapOffset(dragStartOffset.current + delta));
     };
-    const handleMouseUp = () => setIsDragging(false);
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!isTouch.current) return;
+      const delta = dragStartX.current - e.touches[0].clientX;
+      if (Math.abs(delta) > 5) {
+        didDrag.current = true;
+        e.preventDefault();
+      }
+      setScrollOffset(wrapOffset(dragStartOffset.current + delta));
+    };
+    const handleEnd = () => setIsDragging(false);
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mouseup', handleEnd);
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleEnd);
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('mouseup', handleEnd);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleEnd);
     };
   }, [isDragging, wrapOffset]);
 
@@ -204,7 +251,11 @@ export function TeamSection() {
         </SectionDesc>
       </SectionHeader>
 
-      <CarouselWrapper onMouseDown={handleMouseDown} onClickCapture={handleClickCapture}>
+      <CarouselWrapper
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
+        onClickCapture={handleClickCapture}
+      >
         <CarouselTrack
           ref={trackRef}
           $offset={scrollOffset}

@@ -117,8 +117,8 @@ const Subtitle = styled.p`
   }
 `;
 
-const CHAR_DELAY_MS = 55;
-const DELETE_DELAY_MS = 35;
+const CHAR_DELAY_MS = 85;
+const DELETE_DELAY_MS = 45;
 const PAUSE_AT_END_MS = 2200;
 const PAUSE_AFTER_DELETE_MS = 400;
 
