@@ -3,8 +3,8 @@ import type { TeamMember } from "../types";
 export const teamMembers: TeamMember[] = [
   {
     id: "1",
-    slug: "everton-de-freitas-souza",
-    nome: "Everton de Freitas Souza",
+    slug: "everton-freitas-de-souza",
+    nome: "Everton Freitas de Souza",
     cargo: "Engenheiro de Software",
     foto: "/everton.png",
     descricao:
