@@ -1,16 +1,16 @@
 import { Navigate, useParams } from 'react-router-dom';
-import { EvertonDeFreitasSouzaPage } from './EvertonDeFreitasSouzaPage';
+import { EvertonFreitasDeSouzaPage } from './EvertonFreitasDeSouzaPage';
 import { HenriqueAlmeidaMarquesPage } from './HenriqueAlmeidaMarquesPage';
 import { GiovannaFariaItalianiPage } from './GiovannaFariaItalianiPage';
 import { MoisesGoncalvesPage } from './MoisesGoncalvesPage';
 import { NathaliaSoaresDeOliveiraPage } from './NathaliaSoaresDeOliveiraPage';
 
 const slugToPage: Record<string, React.ComponentType> = {
-  'everton-de-freitas-souza': EvertonDeFreitasSouzaPage,
-  'henrique-almeida-marques': HenriqueAlmeidaMarquesPage,
-  'giovanna-faria-italiani': GiovannaFariaItalianiPage,
-  'moises-goncalves': MoisesGoncalvesPage,
-  'nathalia-soares-de-oliveira': NathaliaSoaresDeOliveiraPage,
+    'everton-freitas-de-souza': EvertonFreitasDeSouzaPage,
+    'henrique-almeida-marques': HenriqueAlmeidaMarquesPage,
+    'giovanna-faria-italiani': GiovannaFariaItalianiPage,
+    'moises-goncalves': MoisesGoncalvesPage,
+    'nathalia-soares-de-oliveira': NathaliaSoaresDeOliveiraPage,
 };
 
 /**
@@ -18,17 +18,17 @@ const slugToPage: Record<string, React.ComponentType> = {
  * Cada integrante edita seu próprio arquivo de página em pages/Integrante/.
  */
 export function IntegranteRouter() {
-  const { slug } = useParams<{ slug: string }>();
-  const Page = slug ? slugToPage[slug] : null;
+    const { slug } = useParams<{ slug: string }>();
+    const Page = slug ? slugToPage[slug] : null;
 
-  if (!slug || !Page) {
-    return <Navigate to="/" replace />;
-  }
+    if (!slug || !Page) {
+        return <Navigate to='/' replace />;
+    }
 
-  return <Page />;
+    return <Page />;
 }
 
-export { EvertonDeFreitasSouzaPage } from './EvertonDeFreitasSouzaPage';
+export { EvertonFreitasDeSouzaPage } from './EvertonFreitasDeSouzaPage';
 export { HenriqueAlmeidaMarquesPage } from './HenriqueAlmeidaMarquesPage';
 export { GiovannaFariaItalianiPage } from './GiovannaFariaItalianiPage';
 export { MoisesGoncalvesPage } from './MoisesGoncalvesPage';
