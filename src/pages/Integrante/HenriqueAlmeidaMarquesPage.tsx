@@ -237,33 +237,6 @@ const EducationDescription = styled.p`
   text-align: justify;
 `;
 
-const SkillsList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${spacing.sm};
-  margin-bottom: ${spacing.md};
-
-  span {
-    padding: 0.4rem 0.75rem;
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 0.9rem;
-    color: var(--text-muted);
-  }
-`;
-
-const AwardItem = styled.div`
-  padding: ${spacing.sm} 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.95rem;
-  color: var(--text-muted);
-
-  &:last-child {
-    border-bottom: none;
-  }
-`;
-
 export function HenriqueAlmeidaMarquesPage() {
   return (
     <PageContainer>
