@@ -121,7 +121,7 @@ quinteto-fantastico/
       <td align="center">
         <img src="public/nathalia.png" width="150px" height="150px" style="border-radius: 50%; object-fit: cover;" alt="Nathália Soares de Oliveira"/><br>
         <b>Nathália Soares de Oliveira</b><br>
-        <sub>Desenvolvedora de Software Backend</sub>
+        <sub>Engenheira de Software</sub>
       </td>
     </tr>
   </table>
