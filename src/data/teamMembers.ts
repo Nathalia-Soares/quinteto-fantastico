@@ -23,7 +23,7 @@ export const teamMembers: TeamMember[] = [
     id: "3",
     slug: "giovanna-faria-italiani",
     nome: "Giovanna Faria Italiani",
-    cargo: "Engenheiro de Software",
+    cargo: "Engenheira de Software",
     foto: "/giovanna.png",
     descricao:
       "Engenheira de software com experiência em desenvolvimento full-stack e entrega de valor.",
@@ -41,7 +41,7 @@ export const teamMembers: TeamMember[] = [
     id: "5",
     slug: "nathalia-soares-de-oliveira",
     nome: "Nathalia Soares de Oliveira",
-    cargo: "Engenheiro de Software",
+    cargo: "Engenheira de Software",
     foto: "/nathalia.png",
     descricao:
       "Engenheira de software com atuação em desenvolvimento web e boas práticas de engenharia.",

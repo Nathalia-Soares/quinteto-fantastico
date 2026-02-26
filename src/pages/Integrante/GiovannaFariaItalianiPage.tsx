@@ -140,21 +140,6 @@ const ContactInfo = styled.div`
     gap: ${spacing.lg};
 `;
 
-const ContactLink = styled.a`
-    font-size: 1rem;
-    color: var(--accent);
-    text-decoration: none;
-    transition: color 0.25s ${transitions.smooth};
-    display: inline-flex;
-    align-items: center;
-    gap: ${spacing.sm};
-
-    &:hover {
-        color: var(--accent-hover);
-        text-decoration: underline;
-    }
-`;
-
 const ButtonGroup = styled.div`
     display: flex;
     gap: ${spacing.md};
